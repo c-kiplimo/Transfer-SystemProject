@@ -85,9 +85,27 @@ input[type=submit]:hover {
 	
 </header>
 <body>
+
+&nbsp;&nbsp;&nbsp;
+<div class="sidebar">
+  <h3><strong>Admin Dashboard</strong></h3>
+  <a href="register.php">Register Students</a>
+  <a href="add_students.php">Add Students</a>
+  <a href="add_cod.php">Add COD</a>
+  <a href="add_department.php">Add Departments</a>
+  <hr>
+<a href="#">New Applications</a>
+<a href="#">Approved Applications</a>
+<a href="#">Rejected Applications</a>
+  <a href="#">Logout</a>
+
+
+</div>
+</body>
+
 	<hr>
 	<h4>Register Students</h4>
-	<form>
+	<form method="post" action="">
 		<label for="Fname">First Name</label>
 		<input type="text" id="Fname" name="FName" placeholder="Student's First Name...">
 

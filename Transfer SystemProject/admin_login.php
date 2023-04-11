@@ -1,29 +1,4 @@
-<?php
-require('conn.php');
-session_start();
-if (isset($_POST['username'])) {
-        $Username = stripslashes($_REQUEST['username']);    // removes backslashes
-        $Username = mysqli_real_escape_string($con, $Username);
-        $Password = stripslashes($_REQUEST['password']);
-        $Password = mysqli_real_escape_string($con, $Password);
-        // Check user is exist in the database
-        $query    = "SELECT * FROM `users` WHERE username='$Username'
-                     AND password='" . md5($Password) . "'";
-        $result = mysqli_query($con, $query) or die(mysql_error());
-        $rows = mysqli_num_rows($result);
-        if ($rows == 1) {
-            $_SESSION['username'] = $Username;
-            // Redirect to user dashboard page
-            header("Location: admin_dashboard.php");
-        } else {
-            echo "<div class='form'>
-                  <h3>Incorrect Username/password.</h3><br/>
-                  <p class='link'>Click here to <a href='admin_login.php'>Login</a> again.</p>
-                  </div>";
-        }
-      }
 
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -76,4 +51,47 @@ if (isset($_POST['username'])) {
         </form></div>
     </div>
 </body>
+
+<?php
+if (isset($_POST['admin_login.php'])) {
+    // code...
+    $username = 
+    mysqli_real_escape_string($db, $_POST['username']);
+
+    $password = 
+    mysqli_real_escape_string($db, $_POST['password']);
+
+    if (empty ($username)){
+        array_push($errors, "Username is required!");
+    }
+
+
+    if (empty ($password)){
+        array_push($errors, "Password is required!");
+    }
+
+    if (count($errors) == 0){
+
+        $password = md5($password);
+
+        $query = "SELECT * FROM users WHERE 
+        username = '$username'  AND
+        password = '$password'";
+
+
+        if (mysqli_num_rows($results) == 1 ) {
+
+            $_SESSION['username'] = $username;
+
+            $_SESSION['success'] == "logged in Successfully";
+
+            header('location: Student_Dashboard.php');
+        }
+        else{
+            array_push($errors, "Wrong Username/password!");
+        }
+
+    }
+}
+?>
     </html>

@@ -35,7 +35,8 @@
 
 &nbsp;&nbsp;&nbsp;
 <div class="sidebar">
-  <a class="active" href="#Home">Home</a>
+    <h3><strong>Student Dashboard</strong></h3>
+  <a href="index.php">Home</a>
   <a href="Application_Form.php">Application Form</a>
   <a href="Status">Status</a>
   <a href="student_logout.php">Logout</a>

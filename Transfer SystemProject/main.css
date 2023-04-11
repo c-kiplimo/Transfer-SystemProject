@@ -16,32 +16,6 @@
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {
 background-image: background.jpg;
 }
@@ -147,7 +121,9 @@ div.content{margin-left: 0;}
 .form1{
     background-color: powderblue;
     width: 50%;
-    margin: 20px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    margin: 8px 0;
    
 
 }
@@ -173,7 +149,7 @@ div.content{margin-left: 0;}
 #btn1{
     color: white;
     border: none;
-    background-color: #04AA6D;
+    background-color: blue;
     padding: 16px 32px;
     text-decoration: none;
     text-transform: uppercase;
@@ -260,4 +236,43 @@ input[type=Password]:focus{
 }
 .admin_register{
         box-sizing: content-box;
+}
+.cod_form{
+    width: 50%;
+    height: 50%;
+    padding: 12px 20px;
+    margin: 8px;
+    box-sizing: border-box;
+    align-content: center;
+    
+
+
+}
+#cod_sbmt{
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+#cod_rst{
+    background-color: gray;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+
+}
+#sbmt{
+    background-color: blue;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
 }

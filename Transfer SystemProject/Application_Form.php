@@ -1,44 +1,12 @@
-<?php
-  $conn = include('conn.php');
-// Get the student details from a form or other source
-$Details_Id = isset($_POST["Details_ID"]) ? $_POST["Details_ID"] : "";
-$Name = isset($_POST["Name"]) ? $_POST["Name"] : "";
-$Reg_No = isset($_POST["Reg_No"]) ? $_POST["Reg_No"] : "";
-$Phone_No = isset($_POST["Phone_No"]) ? $_POST["Phone_No"] : "";
-$Current_Program = isset($_POST["Current_Program"]) ? $_POST["Current_Program"] : "";
-$Program_Applied_For = isset($_POST["Program_Applied_For"]) ? $_POST["Program_Applied_For"] : "";
-$KCSE_Index_No = isset($_POST["KCSE_Index_No"]) ? $_POST["KCSE_Index_No"] : "";
-$KCPE_Index_No = isset($_POST["KCPE_Index_No"]) ? $_POST["KCPE_Index_No"] : "";
-$Uploads = isset($_POST["Uploads"]) ? $_POST["Uploads"] : "";
-$Mat = isset($_POST["Mat"]) ? $_POST["Mat"] : "";
-$Eng = isset($_POST["Eng"]) ? $_POST["Eng"] : "";
-$Kis = isset($_POST["Kis"]) ? $_POST["Kis"] : "";
-$Chem = isset($_POST["Chem"]) ? $_POST["Chem"] : "";
-$Bio = isset($_POST["Bio"]) ? $_POST["Bio"] : "";
-$Phy = isset($_POST["Phy"]) ? $_POST["Phy"] : "";
-$Geog = isset($_POST["Geog"]) ? $_POST["Geog"] : "";
-$CRE = isset($_POST["CRE"]) ? $_POST["CRE"] : "";
-$Histrory = isset($_POST["History"]) ? $_POST["History"] : "";
-$Agric = isset($_POST["Agric"]) ? $_POST["Agric"] : "";
-$Bus = isset($_POST["Bus"]) ? $_POST["Bus"] : "";
-$French = isset($_POST["French"]) ? $_POST["French"] : "";
-$Music = isset($_POST["Music"]) ? $_POST["Music"] : "";
-$Home_Sci= isset($_POST["Home_Sci"]) ? $_POST["Home_Sci"] : "";
-$Computer_Studies = isset($_POST["Computer_Studies"]) ? $_POST["Computer_Studies"] : "";
-$Student_ID = isset($_POST["Student_ID"]) ? $_POST["Student_ID"] : "";
 
-// Create a SQL query to insert the form into the database
-$sql = "INSERT INTO tblstuddetails (Details_Id, Name, Reg_No, Phone_No, Current_Program, Program_Applied_For, KCSE_Index_No, KCPE_Index_No, Uploads, Mat, Eng, Kis, Chem, Bio, Phy, Geog, CRE, Histrory, Agric, Bus, French, Music, Home_Sci, Computer_Studies, Student_Id) VALUES ('$Details_Id', '$Name', '$Reg_No', '$Phone_No', '$Current_Program', '$Program_Applied_For', '$KCSE_Index_No', '$KCPE_Index_No', '$Uploads', '$Mat', '$Eng', '$Kis', '$Chem', '$Bio', '$Phy', '$Geog', '$CRE', '$Histrory', '$Agric', '$Bus', '$French', '$Music', '$Home_Sci', '$Computer_Studies', '$Student_ID')";
-// Execute the query and check if it was successful
-if ($conn->query($sql) === TRUE) {
-    echo "The form is submitted successfully!";
-} else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+<?php 
+$con = @mysqli_connect("localhost", "root", "", "transfer_system_database");
+if(!$con){
+  echo "Connection failed!".@mysqli_error($con);
 }
 
-// Close the database connection
-$conn->close();
 ?>
+
 
 <!DOCTYPE html >
 <head>
@@ -76,8 +44,59 @@ $conn->close();
     <hr style="">
 
     </div>
+    <?php
+    // Get the student details from a form or other source
+if(isset($_REQUEST['Name'])){
+  $Name =stripslashes($_REQUEST["Name"]);
+  $Name = mysqli_real_escape_string($con,$Name);
 
- <form class="form1">
+  $Reg_No =stripslashes($_REQUEST["Reg_No"]);
+  $Reg_No = mysqli_real_escape_string($con,$Reg_No); 
+
+  $Phone_No =stripslashes($_REQUEST["Phone_No"]);
+  $Phone_No = mysqli_real_escape_string($con,$Phone_No); 
+
+   $Current_Program =stripslashes($_REQUEST["Current_Program"]);
+  $Current_Program = mysqli_real_escape_string($con,$Current_Program);
+
+   $Program_Applied_For =stripslashes($_REQUEST["Program_Applied_For"]);
+  $Program_Applied_For = mysqli_real_escape_string($con,$Program_Applied_For); 
+
+  $KCSE_Index_No =stripslashes($_REQUEST["KCSE_Index_No"]);
+  $KCSE_Index_No = mysqli_real_escape_string($con,$KCSE_Index_No);
+
+  $KCPE_Index_No =stripslashes($_REQUEST["KCPE_Index_No"]);
+  $KCPE_Index_No = mysqli_real_escape_string($con,$KCPE_Index_No);
+
+  $Uploads =stripslashes($_FILES['Uploads']);
+    $Uploads= mysqli_real_escape_string($con,$Uploads);
+  
+
+
+
+
+// Create a SQL query to insert the form into the database
+$sql = "INSERT INTO tblstuddetails ( Name, Reg_No, Phone_No, Current_Program, Program_Applied_For, KCSE_Index_No, KCPE_Index_No, Uploads, ) VALUES ('$Name', '$Reg_No', '$Phone_No', '$Current_Program', '$Program_Applied_For', '$KCSE_Index_No', '$KCPE_Index_No', '$Uploads')";
+// Execute the query and check if it was successful
+$result=mysqli_query($con,$sql);
+
+   if ($result) {
+            echo "<div class='form'>
+                  <h3>You are registered successfully.</h3><br/>
+                  <p class='link'>Click here to <a href='login.php'>Login</a></p>
+                  </div>";
+        } else {
+            echo "<div class='form'>
+                  <h3>Required fields are missing.</h3><br/>
+                  <p class='link'>Click here to <a href='registration.php'>registration</a> again.</p>
+                  </div>";
+        }
+        } else {
+?>
+
+
+
+ <form class="form1" method="post"action="">
 
     <fieldset class="fieldset">
 
@@ -85,12 +104,12 @@ $conn->close();
     <legend><h5><strong>FILL IN THE FOLLOWING FORM</strong></h5></legend>
 
 
-     <label>NAME OF THE CANDIDATE:&nbsp;&nbsp;<input type="text" name="" class="input"></label><br>
+     <label>NAME OF THE CANDIDATE:&nbsp;&nbsp;<input type="text" name="Name" class="input"></label><br>
 
-     <label>REGISTRATION NUMBER:&nbsp;&nbsp;<input type="text" name="" class="input"></label><br>
-     <label>PHONE NUMBER:&nbsp;&nbsp;<input type="text" name="" class="input"></label><br>
+     <label>REGISTRATION NUMBER:&nbsp;&nbsp;<input type="text" name="Reg_No" class="input"></label><br>
+     <label>PHONE NUMBER:&nbsp;&nbsp;<input type="text" name="Phone_No" class="input"></label><br>
      <label for="Programs">YOUR CURRENT PROGRAM:&nbsp;&nbsp;</label>
-     <select name="Program" id="Program">
+     <select name="  Current_Program" id="Program">
          <option value="IT">IT</option>
          <option value="Computer Science">Computer Science</option>
          <option value="Business Management">Business Management</option>
@@ -103,7 +122,7 @@ $conn->close();
      </select><br>
      <label for="Programs">THE PROGRAM TOU ARE APPLLYING TO SWITCH TO:&nbsp;&nbsp;</label>
 
-      <select name="Program" id="Program">
+      <select name="Program_Applied_For" id="Program">
          <option value="IT">IT</option>
          <option value="Computer Science">Computer Science</option>
          <option value="Business Management">Business Management</option>
@@ -114,269 +133,18 @@ $conn->close();
          <option value="Journalism">Journalism</option>
          <option value="Criminology">Criminology</option>
      </select><br>
-     <label>KSCE INDEX NUMBER:<input type="text" name="" class="input"></label><br>
-     <label>KCPE INDEX NUMBER/BIRTH CERTIFICATE NO:<input type="text" name="" class="input"></label><br>&nbsp;
+     <label>KSCE INDEX NUMBER:<input type="text" name="KCSE_Index_No" class="input"></label><br>
+     <label>KCPE INDEX NUMBER:<input type="text" name="KCPE_Index_No" class="input"></label><br>&nbsp;
       <label for="file-select">UPLOAD YOUR KCSE RESULT SLIP:</label>
-     <input type="file" name="Upload" id="file-select">
- </form>
+     <input type="file" name="Uploads" id="file-select">
+
 
      <h5>SELECT THE GRADES OF SUBJECTS YOU DID IN KCSE AS THEY APPEAR ON YOUR RESULT SLIP:-</h5>
 <div class="subject">
 
 
-    <form class="form2"> 
-        <label for="MATHS">MATHS:</label>
 
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-      <label for="ENGLISH">ENGLISH:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-      <label for="Programs">KISWAHILI:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select><br>
-
-      <label for="Programs">CHEMISTRY:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-          <label for="Programs">BIOLOGY:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-          <label for="Programs">PHYSICS:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-         <option value="-">-</option>
-     </select>
-     <br>
-
-        <label for="Programs">GEOGRAPHY:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-        <label for="Programs">CRE:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-        <label for="Programs">HISTORY:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select><br>
-
-        <label for="Programs">AGRICULTURE:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-        <label for="Programs">BUSINESS STUDIES:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-
-        <label for="Programs">FRENCH LANGUAGE:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-     <br>
-
-      <label for="Programs">MUSIC:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
-      <label for="Programs">HOME SCIENCE:</label>
-
-      <select name="Program" id="Program">
-         <option value="A">A</option>
-         <option value="A-">A-</option>
-         <option value="B+">B+</option>
-         <option value="B Plain">B Plain</option>
-         <option value="B- Minus">B Minus</option>
-         <option value="C+ Plus">C Plus</option>
-         <option value="C Plain">C Plain</option>
-         <option value="C- Minus">C Minus</option>
-         <option value="D+ Plus">D+ Plus</option>
-         <option value="D Plus">D Plain</option>
-         <option value="D- Plus">D- Minus</option>
-         <option value="E">E</option>
-         <option value="-">-</option>
-     </select>
+     
      <br>
      </div>
   
@@ -390,8 +158,10 @@ $conn->close();
     <center> 
         <hr style="border-top: 1px dotted black;">
 
-     <input type="submit" name="Submit" value="SUBMIT" id="btn1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-     <input type="reset" name="Reset" value="RESET" id="btn2">
+     <div class="cod_btns">
+                <input type="submit" class="btn btn-primary" value="Submit" id="cod_sbmt">
+                <input type="reset" class="btn btn-secondary ml-2" value="Reset" id="cod_rst">
+            </div>
      </center>
     
 
@@ -400,6 +170,9 @@ $conn->close();
 
 
  </form>
+ <?php 
+}
+ ?>
 
     <hr class="hr">
 
@@ -417,3 +190,4 @@ Copyright © 2022 Vouma. All rights reserved.
  
 	
 	</html>
+

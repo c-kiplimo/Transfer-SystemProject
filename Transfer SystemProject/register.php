@@ -100,31 +100,55 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
+    <style type="text/css">
         body{ font: 14px sans-serif; }
         .wrapper{ width: 360px; padding: 20px; }
     </style>
 </head>
+
+<body>
+
 <header class="header">
     <div class="container">
 <div class="row">
 <div class="col-md-12">
 
-<center>
+ <center>
 
     <h1 class="text-center ">Kibabii University Faculty Transfer System<br /><small style="font-size:20px">Knowledge For Development</small></h1>
 
     <img id="mimg" src="images/KIbabii-Logo.png" class="img-responsive" style="width: 100px;" />
 
 
-</center>
-</div>
-</div>
-</div>
+ </center>
+ </div>
+ </div>
+ </div>
 
-</header>
-<body>
+ </header>
+
+
+
+ &nbsp;&nbsp;&nbsp;
+ <div class="sidebar">
+  <h3><strong>Admin Dashboard</strong></h3>
+  <a href="register.php">Register Students</a>
+  <a href="add_students.php">Add Students</a>
+  <a href="add_cod.php">Add COD</a>
+  <a href="add_department.php">Add Departments</a>
+  <hr>
+  <a href="#">New Applications</a>
+ <a href="#">Approved Applications</a>
+  <a href="#">Rejected Applications</a>
+  <a href="#">Logout</a>
+
+
+   </div>
+
+   <center>
+
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
@@ -133,12 +157,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <label>Username</label>
                 <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group">
+             </div>    
+             <div class="form-group">
                 <label>Password</label>
                 <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
-            </div>
+             </div>
             <div class="form-group">
                 <label>Confirm Password</label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
@@ -148,7 +172,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-secondary ml-2" value="Reset">
             </div>
-            <p>Already have an account? <a href="login.php">login here</a>.</p>
+
+            </center>
+            
         </form>
     </div>    
 </body>
